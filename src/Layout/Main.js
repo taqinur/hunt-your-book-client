@@ -5,11 +5,14 @@ import Navbar from '../Pages/Shared/Navbar/Navbar';
 
 const Main = () => {
     return (
-        <div>
+        <>
+        <div className='lg:w-11/12 mx-auto'>
             <Navbar></Navbar>
             <Outlet></Outlet>
+            </div>
             <Footer></Footer>
-        </div>
+        
+        </>
     );
 };
 
