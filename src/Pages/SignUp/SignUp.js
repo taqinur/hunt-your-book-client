@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const SignUp = () => {
 
     const { formState: { errors }, register, handleSubmit } = useForm();
+    const {createUser} = useContext(AuthContext);
     const handleSignup = data => {
         console.log(data);
+        createUser(data.email, data.password)
+        .then(res =>{
+            const user = res.user;
+            console.log(user);
+        })
+        .catch(err => console.error(err));
     }
 
     return (
@@ -16,7 +24,13 @@ const SignUp = () => {
                 <form onSubmit={handleSubmit(handleSignup)}>
                     <div className="form-control w-full max-w-xs">
                         <label className="label">
-                            <span className="label-text">Email</span>
+                            <span className="label-text">Your Name</span>
+                        </label>
+                        <input {...register("name", { required: "Name is required" })} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                    </div>
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label">
+                            <span className="label-text">Your Email</span>
                         </label>
                         <input {...register("email", { required: "Email Address is required" })} type="email" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
                     </div>
@@ -24,7 +38,7 @@ const SignUp = () => {
                         <label className="label">
                             <span className="label-text">Your Password</span>
                         </label>
-                        <input {...register("password", { required: "Password is required" })} type="password" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                        <input {...register("password", { required: "Password is required", minLength: {value: 6, message:'Password should be minimum 6 characters long'} })} type="password" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
                     </div>
 
                     <div className="form-control">
@@ -40,6 +54,7 @@ const SignUp = () => {
                         </label>
                     </div>
                     <input className='btn btn-primary w-full' type="submit" />
+                    {errors.name && <p className='text-red-600' role="alert">Alert: {errors.name?.message}</p>}
                     {errors.email && <p className='text-red-600' role="alert">Alert: {errors.email?.message}</p>}
                     {errors.password && <p className='text-red-600' role="alert">Alert: {errors.password?.message}</p>}
                 </form>

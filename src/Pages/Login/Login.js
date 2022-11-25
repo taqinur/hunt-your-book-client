@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const Login = () => {
 
     const { formState: { errors }, register, handleSubmit } = useForm();
+    const {logIn} = useContext(AuthContext);
+
+    const [loginError, setLoginError] = useState('');
+
     const handleLogin = data => {
         console.log(data);
+        setLoginError('');
+        logIn(data.email, data.password)
+        .then(res =>{
+            const user = res.user;
+            console.log(user);
+        })
+        .catch(err => {setLoginError(err.message)});
     }
 
     return (
@@ -32,6 +44,7 @@ const Login = () => {
                     <input className='btn btn-primary w-full' type="submit" />
                     {errors.email && <p className='text-red-600' role="alert">Alert: {errors.email?.message}</p>}
                     {errors.password && <p className='text-red-600' role="alert">Alert: {errors.password?.message}</p>}
+                    {loginError && <p className='text-red-600'>Alert: {loginError.slice(22, -2)}</p>}
                 </form>
                 <p className="text-center my-4">Do not have an account? <Link className='text-emerald-600' to={'/signup'}>Sign Up Here</Link></p>
                 <button className="btn btn-outline btn-primary w-full">Login with Google</button>
