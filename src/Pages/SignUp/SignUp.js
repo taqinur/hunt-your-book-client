@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
@@ -7,6 +7,9 @@ const SignUp = () => {
 
     const { formState: { errors }, register, handleSubmit } = useForm();
     const {createUser} = useContext(AuthContext);
+
+    const [signupError, setSignupError] = useState('');
+
     const handleSignup = data => {
         console.log(data);
         createUser(data.email, data.password)
@@ -14,7 +17,7 @@ const SignUp = () => {
             const user = res.user;
             console.log(user);
         })
-        .catch(err => console.error(err));
+        .catch(err => setSignupError(err.message));
     }
 
     return (
@@ -57,6 +60,7 @@ const SignUp = () => {
                     {errors.name && <p className='text-red-600' role="alert">Alert: {errors.name?.message}</p>}
                     {errors.email && <p className='text-red-600' role="alert">Alert: {errors.email?.message}</p>}
                     {errors.password && <p className='text-red-600' role="alert">Alert: {errors.password?.message}</p>}
+                    {signupError && <p className='text-red-600'>Alert: {signupError.slice(22, -2)}</p>}
                 </form>
                 <p className="text-center my-4">Have an account? <Link className='text-emerald-600' to={'/login'}>Log In Here</Link></p>
             </div>
