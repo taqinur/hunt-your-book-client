@@ -6,18 +6,43 @@ import { AuthContext } from '../../contexts/AuthProvider';
 const SignUp = () => {
 
     const { formState: { errors }, register, handleSubmit } = useForm();
-    const {createUser} = useContext(AuthContext);
+    const {createUser, updateUser} = useContext(AuthContext);
+    const [createdUserEmail, setCreatedUserEmail] = useState('');
 
     const [signupError, setSignupError] = useState('');
 
     const handleSignup = data => {
+        setSignupError('');
         console.log(data);
         createUser(data.email, data.password)
         .then(res =>{
             const user = res.user;
             console.log(user);
+            const userInfo = {
+                displayName: data.name
+            }
+            updateUser(userInfo)
+                    .then(() => {
+                        saveUser(data.name, data.email, data.role);
+                    })
+                    .catch(e => console.log(e));
         })
         .catch(err => setSignupError(err.message));
+    }
+
+    const saveUser = (name, email, role) =>{
+        const user ={name, email, role};
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data =>{
+            setCreatedUserEmail(email);
+        })
     }
 
     return (
