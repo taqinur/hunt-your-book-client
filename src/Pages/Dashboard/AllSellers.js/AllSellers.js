@@ -1,8 +1,9 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { HiCheckCircle } from "react-icons/hi";
 
 const AllSellers = () => {
-    const { data: users = [] } = useQuery({
+    const { data: users = [], refetch } = useQuery({
         queryKey: ['name'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/sellers');
@@ -17,12 +18,15 @@ const AllSellers = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            if(data.modifiedCount> 0){
+                refetch();
+            }
         })
     }
 
     return (
         <div className='my-8'>
+            <h2 className="text-3xl text-yellow-700 text-center mb-4">All Sellers</h2>
             <div className="overflow-x-auto w-full">
                 <table className="table w-full">
 
@@ -50,8 +54,8 @@ const AllSellers = () => {
                                         {user.email}
                                     </td>
                                     <th>
-                                        {user?.verified ? <button
-                                        onClick={() => handleVerifySeller(user._id)} className="btn btn-primary btn-xs">Verify</button>: 
+                                        {!user.verified ? <button
+                                        onClick={() => handleVerifySeller(user._id)} className="btn btn-primary btn-xs">Verify</button> : 
                                         <p className="text-primary">Verified</p>}
                                     </th>
                                     <th>
