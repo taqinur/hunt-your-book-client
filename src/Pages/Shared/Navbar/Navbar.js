@@ -33,7 +33,7 @@ const Navbar = () => {
                                     <li><Link>Submenu 3</Link></li>
                                 </ul>
                             </li>
-                            <li><Link to={'/blog'}></Link></li>
+                            <li><Link to={'/blog'}>Blog</Link></li>
                         </ul>
                     </div>
                     <Link to={'/'} className="w-24 rounded-full"> <img src="logo.png" alt="" /></Link>
@@ -59,8 +59,10 @@ const Navbar = () => {
                 <div className="navbar-end">
                     {user?.uid ?
                         <>
-                            <Link className='mx-2 text-white text-xl'>{user?.displayName}
-                            </Link><button onClick={handleLogOut} className="btn btn-accent">Log Out</button>
+                            <Link className='mx-2 text-white'>
+                                {user?.displayName}
+                            </Link>
+                            <button onClick={handleLogOut} className="btn btn-accent">Log Out</button>
                         </>
                         : <Link to={'/login'} className="btn btn-accent">Log in</Link>}
                 </div>

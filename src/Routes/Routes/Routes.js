@@ -41,10 +41,11 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/dashboard',
-                element:<AdminDashboard></AdminDashboard>
+                element:<AllSellers></AllSellers>
             },
             {
                 path: '/dashboard/all-sellers',

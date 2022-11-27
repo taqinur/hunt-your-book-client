@@ -6,7 +6,7 @@ import Footer from '../Pages/Shared/Footer/Footer';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
 
 const DashboardLayout = () => {
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     // const [isAdmin] = findAdmin(user?.email);
     return (
         <div>
@@ -19,13 +19,16 @@ const DashboardLayout = () => {
                 <div className="drawer-side">
                     <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
                     <ul className="menu p-4 w-80 text-base-content">
-                        <li><Link to="/dashboard">My Appointments</Link></li>
+                        
                         {/* {
                             // isAdmin && <>
-                            //     <li><Link to="/dashboard/all-sellers">All Sellers</Link></li>
-                            //     <li><Link to="/dashboard/all-buyers">All Buyers</Link></li>
+                                
                             // </>
                         } */}
+                        <li><Link className='border-2 mb-2 hover:text-white hover:bg-primary' 
+                        to="/dashboard/all-sellers">All Sellers</Link></li>
+                        <li><Link className='border-2 hover:text-white hover:bg-primary' 
+                        to="/dashboard/all-buyers">All Buyers</Link></li>
 
                     </ul>
 
