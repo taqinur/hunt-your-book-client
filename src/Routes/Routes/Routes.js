@@ -13,6 +13,7 @@ import AllBuyers from '../../Pages/Dashboard/AllBuyers/AllBuyers';
 import AddProduct from '../../Pages/Dashboard/AddProduct/AddProduct';
 import MyProducts from '../../Pages/Dashboard/MyProducts/MyProducts';
 import MyOrders from '../../Pages/Dashboard/MyOrders/MyOrders';
+import CategoryDetails from '../../Pages/CategoryDetails/CategoryDetails';
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,11 @@ const router = createBrowserRouter([
             {
                 path: '/blog',
                 element:<Blog></Blog>
+            },
+            {
+                path: '/category/:id',
+                element:<PrivateRoute><CategoryDetails></CategoryDetails></PrivateRoute>,
+                loader: ({ params }) => fetch(``)
             }
         ]
     },
