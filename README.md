@@ -10,11 +10,12 @@ Live website link:
 5. Admin can verify the sellers and delete any seller or buyer from dashboard.
 
 ## tools and technology used for Front-end :
-1. react
+1. React js
 2. Tailwind
 3. DaisyUi
 4. react query
-5. react toastify
+5. react-hot-toast
+6. react-icons
 
 ## tools and technology used for Back-end :
 1. Node js

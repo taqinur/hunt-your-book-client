@@ -1,9 +1,10 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { HiCheckCircle } from "react-icons/hi";
+import toast from 'react-hot-toast';
+import Loading from '../../Shared/Loading/Loading';
 
 const AllSellers = () => {
-    const { data: users = [], refetch } = useQuery({
+    const { data: users = [],isLoading , refetch } = useQuery({
         queryKey: ['name'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/sellers');
@@ -22,6 +23,24 @@ const AllSellers = () => {
                 refetch();
             }
         })
+    }
+
+    const handleDelete = user => {
+        console.log(user._id);
+        fetch(`http://localhost:5000/users/${user._id}`, {
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.deletedCount > 0){
+                refetch();
+                toast.success(`${user.name} deleted successfully`)
+            }
+        })
+    }
+
+    if (isLoading) {
+        return <Loading></Loading>
     }
 
     return (
@@ -59,7 +78,7 @@ const AllSellers = () => {
                                         <p className="text-primary">Verified</p>}
                                     </th>
                                     <th>
-                                        <button className="btn bg-red-600 btn-xs">Delete</button>
+                                        <button onClick={()=> handleDelete(user)} className="btn bg-red-600 btn-xs">Delete</button>
                                     </th>
                                 </tr>)
                         }

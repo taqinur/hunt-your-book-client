@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import toast from 'react-hot-toast';
 
 const AddProduct = () => {
     const { user } = useContext(AuthContext);
@@ -48,7 +49,7 @@ const AddProduct = () => {
             .then(data => {
                 console.log(data)
                 if (data.acknowledged) {
-                    alert('Your product is added');
+                    toast.success('This Product is added successfully!');
                     navigate('../my-products');
                 }
             })

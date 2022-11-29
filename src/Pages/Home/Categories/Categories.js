@@ -18,9 +18,9 @@ const Categories = () => {
                 {
                     categories?.map(category =>
                         <Link to={`/category/${category.category_id}`}>
-                            <div className="card px-10 mx-28 bg-primary shadow-xl mb-6">
-                                <div className="card-body text-base-100">
-                                    <h4 className='text-accent text-center'>{category.title}</h4>
+                            <div className="card px-8 mx-24 bg-primary shadow-xl mb-6">
+                                <div className="card-body">
+                                    <h2 className='text-yellow-400 card-title text-center'>{category.title}</h2>
                                 </div>
                             </div>
                         </Link>
