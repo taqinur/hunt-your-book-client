@@ -16,7 +16,7 @@ const CategoryDetails = () => {
                 return data;
             })
     })
-    console.log(data);
+    
     if (isLoading) {
         return <Loading></Loading>;
     }

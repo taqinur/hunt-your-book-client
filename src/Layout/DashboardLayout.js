@@ -18,26 +18,26 @@ const DashboardLayout = () => {
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-                    <ul className="menu p-4 w-80 text-base-content">
+                    <ul className="menu p-4 w-80 bg-white text-base-100">
                         
                         {/* {
                             // isAdmin && <>
                                 
                             // </>
                         } */}
-                        <li><Link className='border-2 mb-2 hover:text-white hover:bg-primary' 
+                        <li><Link className='border-2 mb-2 bg-primary' 
                         to="/dashboard/all-sellers">All Sellers</Link></li>
-                        <li><Link className='border-2 hover:text-white hover:bg-primary' 
+                        <li><Link className='border-2 bg-primary' 
                         to="/dashboard/all-buyers">All Buyers</Link></li>
 
                         {/* For seller */}
-                        <li><Link className='border-2 mb-2 hover:text-white hover:bg-primary' 
+                        <li><Link className='border-2 mb-2 bg-primary' 
                         to="/dashboard/add-product">Add A Product</Link></li>
-                        <li><Link className='border-2 hover:text-white hover:bg-primary' 
+                        <li><Link className='border-2 bg-primary' 
                         to="/dashboard/my-products">My Products</Link></li>
 
                         {/* for buyer */}
-                        <li><Link className='border-2 hover:text-white hover:bg-primary' 
+                        <li><Link className='border-2 bg-primary' 
                         to="/dashboard/my-orders">My Orders</Link></li>
 
                     </ul>

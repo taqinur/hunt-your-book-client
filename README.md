@@ -1,5 +1,6 @@
 # Description 
 This is a MERN stack e-commerce website for second-hand book. 
+Live website link: 
 
 ## Features
 1. Users can register in this website as buyer or seller.
@@ -8,18 +9,18 @@ This is a MERN stack e-commerce website for second-hand book.
 4. After payment, the product will not be shown.
 5. Admin can verify the sellers and delete any seller or buyer from dashboard.
 
-# tools and technology Front-end :
+## tools and technology used for Front-end :
 1. react
 2. Tailwind
 3. DaisyUi
 4. react query
 5. react toastify
 
-# tools and technology Back-end :
+## tools and technology used for Back-end :
 1. Node js
 2. Express js
 3. MongoDB
 
-# Admin Credentials
+## Admin Credentials
 adminEmail: admin1@admin.com
 adminPassword: admin123
