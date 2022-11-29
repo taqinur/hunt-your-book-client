@@ -1,11 +1,17 @@
-import React from 'react';
-import { HiCheckCircle } from "react-icons/hi";
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import { HiCheckCircle } from "react-icons/hi";import BookingModal from './BookingModal/BookingModal';
+;
 
-const ProductCard = ({ product }) => {
-    const { sellerName, productName, productImg, condition, resalePrice, originalPrice, yearsUsed, location, contactNumber, status, sellerVerification } = product;
+const ProductCard = ({ product, refetch }) => {
+    const { _id, sellerName, productName, productImg, condition, resalePrice, originalPrice, yearsUsed, location, contactNumber, status, sellerVerification } = product;
+
+    const [bookingProduct, setBookingProduct] = useState(null);
+ 
+
     return (
         <div className="max-w-sm mt-4 mx-auto">
-            {status === 'available' &&
+            
                 <div className="card card-compact w-96 bg-base-100 shadow-xl h-6/6" >
                     <figure><img src={productImg} alt="" style={{ height: '200px' }} /></figure>
                     <div className="card-body">
@@ -18,10 +24,19 @@ const ProductCard = ({ product }) => {
                         <p>Location: {location} <br />
                             Contact Number: {contactNumber}</p>
                         <div className="card-actions justify-center">
-                            <button className="btn btn-primary">Book Now</button>
+                        {status === 'available' ? <button onClick={() => setBookingProduct} htmlFor="booking-modal" className="btn btn-primary">Book Now</button> : <p disabled className="btn btn-primary">Booked</p>}
                         </div>
                     </div>
                 </div>
+            
+            {
+                bookingProduct &&
+                <BookingModal
+                    productName= {productName}
+                    price={resalePrice}
+                    refetch={refetch}
+                    _id = {_id}
+                ></BookingModal>
             }
         </div>
     );

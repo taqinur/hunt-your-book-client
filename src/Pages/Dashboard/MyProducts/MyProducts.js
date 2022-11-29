@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import Loading from '../../Shared/Loading/Loading'
 
@@ -12,6 +13,19 @@ const MyProducts = () => {
         queryFn: () => fetch(url)
             .then(res => res.json())
     })
+
+    const handleDelete = product => {
+        fetch(`http://localhost:5000/products/${product._id}`, {
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.deletedCount > 0){
+                refetch();
+                toast.success(`${product.productName} deleted successfully`)
+            }
+        })
+    }
 
     if (isLoading) {
         return <Loading></Loading>;
@@ -52,7 +66,7 @@ const MyProducts = () => {
                                         }
                                     </td>
                                     <th>
-                                        <button className="btn bg-red-600 btn-xs">Delete</button>
+                                        <button onClick={()=> handleDelete(product)} className="btn bg-red-600 btn-xs">Delete</button>
                                     </th>
                                 </tr>)
                         }

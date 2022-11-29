@@ -31,6 +31,7 @@ const CategoryDetails = () => {
                 data?.map(product => <ProductCard
                 key={product._id}
                 product={product}
+                refetch={refetch}
                 >refetch();</ProductCard>
                 )
             }

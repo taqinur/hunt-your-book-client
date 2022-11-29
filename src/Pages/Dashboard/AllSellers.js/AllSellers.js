@@ -21,6 +21,7 @@ const AllSellers = () => {
         .then(data => {
             if(data.modifiedCount> 0){
                 refetch();
+                toast.success('Verified successfully');
             }
         })
     }
@@ -34,7 +35,7 @@ const AllSellers = () => {
         .then(data => {
             if(data.deletedCount > 0){
                 refetch();
-                toast.success(`${user.name} deleted successfully`)
+                toast.success(`${user.name} deleted successfully`);
             }
         })
     }
