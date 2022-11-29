@@ -1,9 +1,21 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
+
+    const { data: categories = [] } = useQuery({
+        queryKey: ['_id'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:5000/categories');
+            const data = await res.json();
+            return data;
+        }
+    })
+    console.log(categories)
+
     const handleLogOut = () => {
         logOut()
             .then(() => {
@@ -28,9 +40,9 @@ const Navbar = () => {
                                     <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
                                 </Link>
                                 <ul className="p-2 bg-primary">
-                                    <li><Link>Submenu 1</Link></li>
-                                    <li><Link>Submenu 2</Link></li>
-                                    <li><Link>Submenu 3</Link></li>
+                                    <li><Link to={'/category/1'}>Fiction</Link></li>
+                                    <li><Link to={'/category/2'}>Non Fiction</Link></li>
+                                    <li><Link to={'/category/3'}>Novel</Link></li>
                                 </ul>
                             </li>
                             <li><Link to={'/blog'}>Blog</Link></li>
@@ -47,9 +59,9 @@ const Navbar = () => {
                                 <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
                             </Link>
                             <ul className="p-2 bg-primary menu-compact z-50">
-                                <li><Link>Submenu 1</Link></li>
-                                <li><Link>Submenu 2</Link></li>
-                                <li><Link>Submenu 3</Link></li>
+                                <li><Link to={'/category/1'}>Fiction</Link></li>
+                                <li><Link to={'/category/2'}>Non Fiction</Link></li>
+                                <li><Link to={'/category/3'}>Novel</Link></li>
                             </ul>
                         </li>
                         {user?.uid ? <li><Link to={'/dashboard'}>Dashboard</Link></li> : <></>}

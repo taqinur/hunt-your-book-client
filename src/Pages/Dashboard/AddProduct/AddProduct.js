@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -5,14 +6,23 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 
 const AddProduct = () => {
     const { user } = useContext(AuthContext);
-    console.log(user?.displayName);
+    console.log(user?.email);
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
+    const url = `http://localhost:5000/users?email=${user.email}`;
+
+    const { data: currentUser } = useQuery({
+        queryKey: ['_id'],
+        queryFn: () => fetch(url)
+            .then(res => res.json())
+    })
+    console.log(currentUser[0].verified);
 
     const handleAddProduct = data => {
         console.log(data);
         const addProduct = {           
             sellerName: user?.displayName,
+            sellerVerification: currentUser[0].verified,
             email: user?.email,
             productName: data.productName,
             productImg: data.productImg,
