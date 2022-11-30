@@ -1,6 +1,6 @@
 # Description 
 This is a MERN stack e-commerce website for second-hand book. 
-Live website link: 
+### Live website link: https://hunt-your-book.web.app/
 
 ## Features
 1. Users can register in this website as buyer or seller.
@@ -23,5 +23,5 @@ Live website link:
 3. MongoDB
 
 ## Admin Credentials
-adminEmail: admin1@admin.com
-adminPassword: admin123
+* adminEmail: admin1@admin.com
+* adminPassword: admin123

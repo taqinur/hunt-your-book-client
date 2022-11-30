@@ -14,6 +14,7 @@ import AddProduct from '../../Pages/Dashboard/AddProduct/AddProduct';
 import MyProducts from '../../Pages/Dashboard/MyProducts/MyProducts';
 import MyOrders from '../../Pages/Dashboard/MyOrders/MyOrders';
 import CategoryDetails from '../../Pages/CategoryDetails/CategoryDetails';
+import Dashboard from '../../Pages/Dashboard/Dashboard/Dashboard';
 
 const router = createBrowserRouter([
     {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
             {
                 path: '/category/:id',
                 element:<PrivateRoute><CategoryDetails></CategoryDetails></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/categories/${params.id}`)
+                loader: ({ params }) => fetch(`https://hunt-your-book-server.vercel.app/categories/${params.id}`)
             }
         ]
     },
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/dashboard',
-                element:<AllSellers></AllSellers>
+                element:<Dashboard></Dashboard>
             },
             {
                 path: '/dashboard/all-sellers',

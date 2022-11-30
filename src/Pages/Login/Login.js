@@ -1,18 +1,21 @@
+import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
+import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
 
     const { formState: { errors }, register, handleSubmit } = useForm();
-    const {logIn} = useContext(AuthContext);
-
+    const {logIn, providerLogin, updateUser} = useContext(AuthContext);
+    const googleProvider = new GoogleAuthProvider();
+    const [createdUserEmail, setCreatedUserEmail] = useState('');
     const [loginError, setLoginError] = useState('');
+
     const location = useLocation();
     const navigate = useNavigate();
-
-    const from = location.state?.from.pathname || '/';
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = data => {
         console.log(data);
@@ -20,10 +23,43 @@ const Login = () => {
         logIn(data.email, data.password)
         .then(res =>{
             const user = res.user;
-            console.log(user);
             navigate(from, {replace: true}); 
         })
         .catch(err => {setLoginError(err.message)});
+    }
+
+    const handleGoogleSignIn = () => {
+        providerLogin(googleProvider)
+          .then(result => {
+            const user = result.user;
+            const userInfo = {
+                role: "buyer"
+            }
+            updateUser(userInfo)
+                    .then(() => {
+                        saveUser(user.displayName, user.email, userInfo.role);
+                        navigate(from, {replace: true});
+                    })
+                    .catch(e => console.log(e));    
+          })
+          .catch(error => {
+            setLoginError(error.message);
+          })
+      }
+
+      const saveUser = (name, email, role) =>{
+        const user ={name, email, role};
+        fetch('https://hunt-your-book-server.vercel.app/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data =>{
+            setCreatedUserEmail(email);
+        })
     }
 
     return (
@@ -52,7 +88,7 @@ const Login = () => {
                     {loginError && <p className='text-red-600'>Alert: {loginError.slice(22, -2)}</p>}
                 </form>
                 <p className="text-center my-4">Do not have an account? <Link className='text-emerald-600' to={'/signup'}>Sign Up Here</Link></p>
-                <button className="btn btn-outline btn-primary w-full">Login with Google</button>
+                <button onClick={handleGoogleSignIn} className="btn btn-outline btn-primary w-full"><FaGoogle></FaGoogle> Log in with Google</button>
             </div>
         </div>
     );

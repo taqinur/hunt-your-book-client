@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import app from '../firebase/firebase.config';
 import { useQuery } from '@tanstack/react-query';
 
@@ -12,11 +12,15 @@ const AuthProvider = ({ children }) => {
     const { data: categories, refetch } = useQuery({
         queryKey: ['_id'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/categories');
+            const res = await fetch('https://hunt-your-book-server.vercel.app/categories');
             const data = await res.json();
             return data;
         }
     })
+
+    const providerLogin = (provider) =>{
+        return signInWithPopup(auth, provider);
+    }
 
 
     const createUser = (email, password) => {
@@ -44,7 +48,7 @@ const AuthProvider = ({ children }) => {
         return () => unsubscribe();
     }, [])
 
-    const authInfo = { createUser, logIn, logOut, user, loading, updateUser, categories }
+    const authInfo = { createUser, logIn, logOut, user, loading, updateUser, providerLogin, categories }
     return (
         <div>
             <AuthContext.Provider value={authInfo}>

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const SignUp = () => {
@@ -8,8 +8,11 @@ const SignUp = () => {
     const { formState: { errors }, register, handleSubmit } = useForm();
     const {createUser, updateUser} = useContext(AuthContext);
     const [createdUserEmail, setCreatedUserEmail] = useState('');
-
     const [signupError, setSignupError] = useState('');
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
 
     const handleSignup = data => {
         setSignupError('');
@@ -24,6 +27,7 @@ const SignUp = () => {
             updateUser(userInfo)
                     .then(() => {
                         saveUser(data.name, data.email, data.role);
+                        navigate(from, {replace: true});
                     })
                     .catch(e => console.log(e));
         })
@@ -32,7 +36,7 @@ const SignUp = () => {
 
     const saveUser = (name, email, role) =>{
         const user ={name, email, role};
-        fetch('http://localhost:5000/users', {
+        fetch('https://hunt-your-book-server.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

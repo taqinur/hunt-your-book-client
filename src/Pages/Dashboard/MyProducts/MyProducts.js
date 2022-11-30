@@ -7,15 +7,33 @@ import Loading from '../../Shared/Loading/Loading'
 const MyProducts = () => {
 
     const { user } = useContext(AuthContext);
-    const url = `http://localhost:5000/products?email=${user.email}`;
+    const url = `https://hunt-your-book-server.vercel.app/products?email=${user.email}`;
 
     const { data: products, isLoading, refetch } = useQuery({
-        queryFn: () => fetch(url)
-            .then(res => res.json())
+        queryKey: ['_id'],
+        queryFn: async () => {
+            const res = await fetch(url);
+            const data = await res.json();
+            return data;
+        }
     })
 
+    const handleAdvertise = id =>{
+        console.log(id);
+        fetch(`https://hunt-your-book-server.vercel.app/products/ad/${id}`, {
+            method: 'PUT'
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.modifiedCount> 0){
+                refetch();
+                toast.success('Advertised successfully');
+            }
+        })
+    }
+
     const handleDelete = product => {
-        fetch(`http://localhost:5000/products/${product._id}`, {
+        fetch(`https://hunt-your-book-server.vercel.app/products/${product._id}`, {
             method: 'DELETE'
         })
         .then(res => res.json())
@@ -61,8 +79,8 @@ const MyProducts = () => {
                                         {product.resalePrice}
                                     </td>
                                     <td>
-                                        {product.status} {(product.status==='available') &&
-                                            <button className="btn bg-primary btn-xs">Advertise</button>
+                                        {product.status} & { !product.advertised ?
+                                            <button onClick={() => handleAdvertise(product._id)} className="btn bg-primary btn-xs">Advertise</button> :<p className="text-primary">Advertised</p>
                                         }
                                     </td>
                                     <th>

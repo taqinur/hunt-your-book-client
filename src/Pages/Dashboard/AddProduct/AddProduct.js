@@ -10,7 +10,7 @@ const AddProduct = () => {
     console.log(user?.email);
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
-    const url = `http://localhost:5000/users?email=${user.email}`;
+    const url = `https://hunt-your-book-server.vercel.app/users?email=${user.email}`;
 
     const { data: currentUser } = useQuery({
         queryKey: ['_id'],
@@ -38,7 +38,7 @@ const AddProduct = () => {
             
         }
 
-        fetch('http://localhost:5000/products', {
+        fetch('https://hunt-your-book-server.vercel.app/products', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

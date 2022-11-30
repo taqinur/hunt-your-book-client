@@ -25,7 +25,7 @@ const BookingModal = ({ productName, price, _id, refetch}) => {
 
        
     const handleBookingProduct = id =>{
-        fetch(`http://localhost:5000/products/booked/${id}`, {
+        fetch(`https://hunt-your-book-server.vercel.app/products/booked/${id}`, {
             method: 'PUT'
         })
         .then(res => res.json())

@@ -7,7 +7,7 @@ const AllBuyers = () => {
     const { data: users, isLoading, refetch } = useQuery({
         queryKey: ['name'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/buyers');
+            const res = await fetch('https://hunt-your-book-server.vercel.app/buyers');
             const data = await res.json();
             return data;
         }
@@ -16,7 +16,7 @@ const AllBuyers = () => {
     
     const handleDelete = user => {
         console.log(user._id);
-        fetch(`http://localhost:5000/users/${user._id}`, {
+        fetch(`https://hunt-your-book-server.vercel.app/users/${user._id}`, {
             method: 'DELETE'
         })
         .then(res => res.json())

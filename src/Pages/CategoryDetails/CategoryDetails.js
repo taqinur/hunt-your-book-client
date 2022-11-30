@@ -6,7 +6,7 @@ import ProductCard from './ProductCard';
 
 const CategoryDetails = () => {
     const {category_id} = useLoaderData();
-    const url = `http://localhost:5000/products?category_id=${category_id}`;
+    const url = `https://hunt-your-book-server.vercel.app/products?category_id=${category_id}`;
 
     const { data, isLoading, refetch } = useQuery({
         queryKey: ['_id'],
@@ -21,7 +21,7 @@ const CategoryDetails = () => {
         return <Loading></Loading>;
     }
     return (
-        <div className='py-6'>
+        <div className='py-6 mb-8'>
         <div>
             <p className="text-5xl text-center mt-10 font-bold text-emerald-700">Available Books</p>
             <p className='text-center mt-3 font-semibold text-violet-600'>Find Your Favorite Books!</p>
